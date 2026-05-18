@@ -240,7 +240,7 @@ const Learn = {
       <h3 style="margin: 2rem 0 0.75rem; color: var(--pd-color); font-size: 1.1rem;">
         📜 الكود الكامل
       </h3>
-      <div class="code-block">${syntaxHighlight(cls.fullCode)}</div>
+      <div class="code-block"><pre>${syntaxHighlight(cls.fullCode)}</pre></div>
     `;
 
     // Bind method toggles
@@ -522,21 +522,21 @@ function syntaxHighlight(code) {
   // Annotations
   html = html.replace(/(@\w+)/g, '<span class="tk-ann">$1</span>');
 
-  // Keywords
+  // Keywords (تمت إضافة استثناء لمنع تخريب وسوم الـ HTML)
   const keywords = ['public', 'private', 'protected', 'static', 'final', 'abstract',
                     'class', 'interface', 'extends', 'implements', 'return', 'new',
                     'this', 'super', 'void', 'null', 'true', 'false', 'if', 'else',
                     'for', 'while', 'do', 'switch', 'case', 'break', 'continue',
                     'package', 'import', 'throws', 'throw', 'try', 'catch', 'finally'];
-  const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b', 'g');
+  const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b(?![^<]*>)', 'g');
   html = html.replace(kwRegex, '<span class="tk-key">$1</span>');
 
-  // Types (start with uppercase)
-  html = html.replace(/\b(String|Integer|Boolean|Double|Float|Long|Char|Object|List|ArrayList|HashMap|Map|Set|Date|Exception|Builder|Runnable|ExecutorService|Executors|Thread|System|Math|Arrays|Collections|Iterator|LinkedList|Character|StringBuilder)\b/g,
+  // Types (start with uppercase) - (تمت إضافة الاستثناء هنا أيضاً)
+  html = html.replace(/\b(String|Integer|Boolean|Double|Float|Long|Char|Object|List|ArrayList|HashMap|Map|Set|Date|Exception|Builder|Runnable|ExecutorService|Executors|Thread|System|Math|Arrays|Collections|Iterator|LinkedList|Character|StringBuilder)\b(?![^<]*>)/g,
     '<span class="tk-typ">$1</span>');
 
-  // Numbers
-  html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="tk-num">$1</span>');
+  // Numbers - (تمت إضافة الاستثناء هنا أيضاً)
+  html = html.replace(/\b(\d+\.?\d*)\b(?![^<]*>)/g, '<span class="tk-num">$1</span>');
 
   return html;
 }
