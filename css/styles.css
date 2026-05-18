@@ -1181,6 +1181,15 @@ code, pre, .code {
 
 /* RTL support for the whole app */
 body { direction: rtl; }
-.code-block, .editor-textarea, .code-method-snippet { direction: ltr; text-align: left; }
+.code-block, .editor-textarea, .code-method-snippet, code { 
+    direction: ltr; 
+    text-align: left; 
+    unicode-bidi: isolate; 
+}
+
+code {
+    display: inline-block;
+    padding: 0 4px;
+}
 .code-method-name { direction: ltr; }
 .learn-class-name { direction: ltr; }
